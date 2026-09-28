@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Anett Szabo – Ganzheitliche Körperarbeit, Yoga, Pilates, Meditation, Faszientraining & Einzelsitzungen. Bewusste Prozessbegleitung & mediale Wahrnehmung in Ihrer Nähe.">
+<title>Natürlich in Bewegung – Anett Szabo</title>
+<style>
+  :root {
+    --bg: #F5F1E8;
+    --text: #4F4A52;
+    --muted: #7B7480;
+    --primary: #A996B8;
+    --secondary: #AEBDA3;
+    --accent: #BFA06A;
+    --border: #DDD4C8;
+    --card: #FFFFFF;
+    --nav-h: 64px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.7; }
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; width: 100%; background: rgba(245,241,232,0.96); backdrop-filter: blur(6px); border-bottom: 1px solid var(--border); z-index: 100; height: var(--nav-h); display: flex; align-items: center; }
+  .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; width: 100%; }
+  .logo { font-size: 1.1rem; font-weight: normal; letter-spacing: 0.05em; color: var(--text); }
+  .logo span { color: var(--primary); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
+  .nav-links a:hover { color: var(--primary); }
+  .nav-cta { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; background: var(--primary); color: #fff; padding: 8px 18px; border-radius: 2px; transition: background 0.2s; }
+  .nav-cta:hover { background: #967fa8; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--text); }
+
+  /* HERO */
+  .hero { padding-top: var(--nav-h); min-height: 100vh; display: flex; align-items: center; background: linear-gradient(160deg, #EDE8DC 0%, #F5F1E8 60%, #E8E2F0 100%); position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; right: -100px; top: 50%; transform: translateY(-50%); width: 500px; height: 500px; border-radius: 50%; background: rgba(169,150,184,0.1); }
+  .hero::after { content: ''; position: absolute; right: 80px; top: 30%; width: 280px; height: 280px; border-radius: 50%; background: rgba(174,189,163,0.12); }
+  .hero-inner { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; position: relative; z-index: 1; }
+  .hero-eyebrow { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; }
+  .hero h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: normal; line-height: 1.25; color: var(--text); max-width: 680px; margin-bottom: 1.5rem; }
+  .hero h1 em { font-style: italic; color: var(--primary); }
+  .hero-sub { font-size: 1.05rem; color: var(--muted); max-width: 520px; margin-bottom: 2.5rem; line-height: 1.8; }
+  .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; background: var(--primary); color: #fff; padding: 14px 28px; border-radius: 2px; transition: background 0.2s; border: none; cursor: pointer; }
+  .btn-primary:hover { background: #967fa8; }
+  .btn-outline { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; background: transparent; color: var(--text); padding: 13px 28px; border-radius: 2px; border: 1px solid var(--border); transition: all 0.2s; cursor: pointer; }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+  .hero-tags { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 3rem; }
+  .tag { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); background: rgba(255,255,255,0.6); border: 1px solid var(--border); padding: 5px 12px; border-radius: 20px; }
+
+  /* SECTIONS */
+  section { padding: 5rem 2rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem; }
+  h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: normal; line-height: 1.3; color: var(--text); margin-bottom: 1rem; }
+  h2 em { font-style: italic; color: var(--primary); }
+  .section-intro { font-size: 1rem; color: var(--muted); max-width: 600px; margin-bottom: 3rem; }
+
+  /* ABOUT */
+  #about { background: var(--card); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .about-visual { position: relative; }
+  .about-circle { width: 340px; height: 340px; border-radius: 50%; background: linear-gradient(135deg, rgba(169,150,184,0.2), rgba(174,189,163,0.2)); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; margin: 0 auto; }
+  .about-initials { font-size: 4rem; color: var(--primary); opacity: 0.4; }
+  .about-quote { font-style: italic; font-size: 1.1rem; line-height: 1.8; color: var(--muted); border-left: 2px solid var(--accent); padding-left: 1.5rem; margin-bottom: 1.5rem; }
+  .about-text { font-size: 0.97rem; color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
+
+  /* ANGEBOTE */
+  #angebote { background: var(--bg); }
+  .offer-tabs { display: flex; gap: 0; border: 1px solid var(--border); border-radius: 2px; margin-bottom: 2.5rem; width: fit-content; overflow: hidden; }
+  .offer-tab { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 10px 20px; background: transparent; border: none; color: var(--muted); cursor: pointer; transition: all 0.2s; border-right: 1px solid var(--border); }
+  .offer-tab:last-child { border-right: none; }
+  .offer-tab.active { background: var(--primary); color: #fff; }
+  .offer-panel { display: none; }
+  .offer-panel.active { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+  .offer-card { background: var(--card); border: 1px solid var(--border); border-radius: 2px; padding: 1.8rem; transition: border-color 0.2s; }
+  .offer-card:hover { border-color: var(--primary); }
+  .offer-icon { width: 36px; height: 36px; border-radius: 50%; background: rgba(169,150,184,0.15); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 18px; }
+  .offer-card h3 { font-size: 1rem; font-weight: normal; margin-bottom: 0.5rem; color: var(--text); }
+  .offer-card p { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.87rem; color: var(--muted); line-height: 1.6; }
+  .offer-badge { display: inline-block; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; background: rgba(174,189,163,0.25); color: #6a8a60; border: 1px solid rgba(174,189,163,0.5); padding: 3px 8px; border-radius: 20px; margin-top: 0.8rem; }
+
+  /* VERANSTALTUNGEN */
+  #termine { background: var(--card); }
+  .events-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .event-item { display: flex; gap: 1.2rem; align-items: flex-start; padding: 1.4rem; background: var(--bg); border: 1px solid var(--border); border-radius: 2px; }
+  .event-date { text-align: center; min-width: 50px; }
+  .event-day { font-size: 1.6rem; font-weight: normal; color: var(--primary); line-height: 1; }
+  .event-month { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .event-info h4 { font-weight: normal; font-size: 1rem; margin-bottom: 0.3rem; }
+  .event-info p { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.83rem; color: var(--muted); }
+  .event-type { display: inline-block; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; background: rgba(191,160,106,0.15); color: #9a7840; border: 1px solid rgba(191,160,106,0.3); padding: 2px 8px; border-radius: 20px; margin-bottom: 0.4rem; }
+
+  /* TERMINBUCHUNG */
+  #buchung { background: var(--bg); }
+  .booking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .calendar-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 2px; padding: 1.5rem; }
+  .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
+  .cal-title { font-size: 1rem; font-weight: normal; }
+  .cal-nav { background: none; border: 1px solid var(--border); width: 30px; height: 30px; border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--muted); transition: all 0.2s; }
+  .cal-nav:hover { border-color: var(--primary); color: var(--primary); }
+  .cal-days-header { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; margin-bottom: 4px; }
+  .cal-day-name { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-align: center; padding: 4px 0; }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+  .cal-cell { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.83rem; border-radius: 2px; cursor: pointer; transition: all 0.15s; color: var(--text); background: transparent; border: 1px solid transparent; }
+  .cal-cell:hover { background: rgba(169,150,184,0.1); border-color: var(--primary); }
+  .cal-cell.empty { cursor: default; }
+  .cal-cell.today { background: rgba(169,150,184,0.2); font-weight: bold; }
+  .cal-cell.has-event { background: rgba(174,189,163,0.25); border-color: rgba(174,189,163,0.5); }
+  .cal-cell.has-event::after { content: '·'; position: absolute; bottom: 2px; font-size: 18px; color: var(--secondary); }
+  .cal-cell.has-event { position: relative; }
+  .cal-cell.selected { background: var(--primary); color: #fff; }
+  .booking-form { }
+  .form-group { margin-bottom: 1.2rem; }
+  .form-group label { display: block; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 2px; padding: 10px 14px; font-family: Georgia, serif; font-size: 0.93rem; color: var(--text); transition: border-color 0.2s; outline: none; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--primary); }
+  .form-group textarea { height: 90px; resize: vertical; }
+  .selected-date-display { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.83rem; color: var(--primary); margin-bottom: 1rem; min-height: 1.2em; }
+  .event-list-mini { margin-top: 1.5rem; }
+  .event-list-mini h4 { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.8rem; }
+  .event-mini-item { display: flex; gap: 0.8rem; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.83rem; }
+  .event-mini-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--secondary); flex-shrink: 0; }
+  .admin-toggle { margin-top: 1.5rem; }
+  .admin-toggle summary { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); cursor: pointer; user-select: none; }
+  .admin-panel { background: var(--bg); border: 1px solid var(--border); border-radius: 2px; padding: 1rem; margin-top: 0.8rem; }
+  .admin-panel p { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: var(--muted); margin-bottom: 0.8rem; }
+  .admin-event-form { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+  .admin-event-form input { padding: 7px 10px; border: 1px solid var(--border); border-radius: 2px; font-size: 0.82rem; background: var(--card); color: var(--text); outline: none; }
+  .admin-event-form input:focus { border-color: var(--primary); }
+  .admin-event-form input.full { grid-column: 1 / -1; }
+  .btn-small { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; background: var(--secondary); color: #fff; border: none; padding: 7px 16px; border-radius: 2px; cursor: pointer; margin-top: 0.4rem; }
+
+  /* ONLINE */
+  #online { background: var(--card); }
+  .online-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+  .online-card { background: var(--bg); border: 1px solid var(--border); border-radius: 2px; padding: 1.8rem; }
+  .online-card .soon { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); background: rgba(221,212,200,0.5); padding: 3px 8px; border-radius: 20px; display: inline-block; margin-bottom: 0.8rem; }
+  .online-card h3 { font-weight: normal; font-size: 1rem; margin-bottom: 0.4rem; }
+  .online-card p { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.83rem; color: var(--muted); }
+
+  /* KONTAKT */
+  #kontakt { background: var(--bg); }
+  .kontakt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .kontakt-info h3 { font-weight: normal; font-size: 1.1rem; margin-bottom: 1.2rem; }
+  .kontakt-item { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1rem; }
+  .kontakt-icon { font-size: 16px; margin-top: 2px; opacity: 0.6; }
+  .kontakt-item div { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.88rem; }
+  .kontakt-item div strong { display: block; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+  .kontakt-item div a { color: var(--text); }
+  .kontakt-form { background: var(--card); border: 1px solid var(--border); border-radius: 2px; padding: 2rem; }
+  .kontakt-form h3 { font-weight: normal; font-size: 1.05rem; margin-bottom: 1.5rem; }
+  .whatsapp-btn { display: flex; align-items: center; gap: 0.6rem; background: #25D366; color: #fff; padding: 12px 20px; border-radius: 2px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase; width: 100%; justify-content: center; margin-top: 1rem; transition: background 0.2s; cursor: pointer; border: none; }
+  .whatsapp-btn:hover { background: #1aab52; }
+
+  /* FOOTER */
+  footer { background: var(--text); color: rgba(245,241,232,0.7); padding: 3rem 2rem; }
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-logo { font-size: 1.05rem; color: rgba(245,241,232,0.9); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(245,241,232,0.5); transition: color 0.2s; }
+  .footer-links a:hover { color: rgba(245,241,232,0.9); }
+  .footer-copy { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.75rem; }
+
+  /* DIVIDER */
+  .ornament { text-align: center; color: var(--accent); font-size: 1.2rem; letter-spacing: 0.5rem; margin: 0.5rem 0 3rem; opacity: 0.5; }
+
+  @media (max-width: 768px) {
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .about-grid, .booking-grid, .kontakt-grid, .events-grid { grid-template-columns: 1fr; }
+    .about-circle { width: 200px; height: 200px; }
+    .admin-event-form { grid-template-columns: 1fr; }
+    .admin-event-form input.full { grid-column: 1; }
+    .offer-tabs { overflow-x: auto; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">Natürlich <span>in Bewegung</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">Über mich</a></li>
+      <li><a href="#angebote">Angebote</a></li>
+      <li><a href="#termine">Termine</a></li>
+      <li><a href="#online">Online</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+    <a href="#buchung" class="nav-cta">Termin buchen</a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Anett Szabo · natuerlichinbewegung.de</p>
+    <h1>Ein Weg zurück in<br>deine <em>innere Ganzheit</em></h1>
+    <p class="hero-sub">Ganzheitliche Körperarbeit, bewusste Prozessbegleitung und mediale Wahrnehmung – auf körperlicher, geistiger und seelischer Ebene.</p>
+    <div class="btn-group">
+      <a href="#buchung" class="btn-primary">Termin vereinbaren</a>
+      <a href="#angebote" class="btn-outline">Angebote entdecken</a>
+    </div>
+    <div class="hero-tags">
+      <span class="tag">Yoga</span>
+      <span class="tag">Pilates</span>
+      <span class="tag">Meditation</span>
+      <span class="tag">Faszientraining</span>
+      <span class="tag">Atemarbeit</span>
+      <span class="tag">Systemische Aufstellung</span>
+      <span class="tag">Mediale Begleitung</span>
+    </div>
+  </div>
+</section>
+
+<!-- ÜBER MICH -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="about-circle">
+          <span class="about-initials">A·S</span>
+        </div>
+      </div>
+      <div>
+        <p class="section-label">Über mich</p>
+        <h2>Anett <em>Szabo</em></h2>
+        <div class="ornament">· · ·</div>
+        <p class="about-quote">„In meiner Arbeit verbinde ich ganzheitliche Körperarbeit mit bewusster Prozessbegleitung und medialer Wahrnehmung."</p>
+        <p class="about-text">Ich arbeite auf körperlicher, geistiger und seelischer Ebene und unterstütze dabei, Blockaden achtsam zu erkennen – dort, wo sie sich zeigen: im Körper, im Denken oder im inneren Erleben.</p>
+        <p class="about-text">Diese Prozesse dürfen sich in einem geschützten Raum lösen und neu ordnen. So entsteht Raum für Selbstheilung, innere Ausrichtung und eine tiefe Rückverbindung mit dem eigenen Wesenskern – gerade in Zeiten des Wandels und der Neuorientierung.</p>
+        <br>
+        <a href="#kontakt" class="btn-outline">Kontakt aufnehmen</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANGEBOTE -->
+<section id="angebote">
+  <div class="section-inner">
+    <p class="section-label">Angebote</p>
+    <h2>Was ich dir <em>anbiete</em></h2>
+    <p class="section-intro">Vielfältige Wege zur inneren Ganzheit – in Gruppen oder im Einzelsetting, je nach deinem Bedürfnis.</p>
+    <div class="offer-tabs">
+      <button class="offer-tab active" onclick="switchTab('kurse')">Kurse &amp; Gruppen</button>
+      <button class="offer-tab" onclick="switchTab('einzel')">Einzelsitzungen</button>
+      <button class="offer-tab" onclick="switchTab('atem')">Atem &amp; Energie</button>
+    </div>
+
+    <div id="panel-kurse" class="offer-panel active">
+      <div class="offer-card">
+        <div class="offer-icon">🧘</div>
+        <h3>Yoga</h3>
+        <p>Bewusstes Bewegen und Atmen zur Verbindung von Körper, Geist und Seele. Für alle Levels geeignet.</p>
+        <span class="offer-badge">Gruppenangebot</span>
+      </div>
+      <div class="offer-card">
+        <div class="offer-icon">🌿</div>
+        <h3>Pilates</h3>
+        <p>Gezielte Kräftigung der Körpermitte, verbesserte Körperwahrnehmung und Haltungsarbeit.</p>
+        <span class="offer-badge">Gruppenangebot</span>
+      </div>
+      <div class="offer-card">
+        <div class="offer-icon">✦</div>
+        <h3>Faszientraining</h3>
+        <p>Lösung von Verklebungen im Bindegewebe, mehr Beweglichkeit und tiefes Körpergefühl.</p>
+        <span class="offer-badge">Gruppenangebot</span>
+      </div>
+      <div class="offer-card">
+        <div class="offer-icon">🕊</div>
+        <h3>Meditation</h3>
+        <p>Stille finden, innere Mitte stärken und in die Tiefe des eigenen Bewusstseins eintauchen.</p>
+        <span class="offer-badge">Gruppenangebot</span>
+      </div>
+    </div>
+
+    <div id="panel-einzel" class="offer-panel">
+      <div class="offer-card">
+        <div class="offer-icon">🤲</div>
+        <h3>Körperarbeit</h3>
+        <p>Individuelle ganzheitliche Körperarbeit zur Lösung von Blockaden und zur Förderung des Selbstheilungsprozesses.</p>
+        <span class="offer-badge">Einzelsitzung</span>
+      </div>
+      <div class="offer-card">
+        <div class="offer-icon">🌀</div>
+        <h3>Systemische Aufstellung</h3>
+        <p>Sichtbarmachen verborgener Muster in persönlichen und familiären Systemen – für tiefe Klärung und Neuausrichtung.</p>
+        <span class="offer-badge">Einzelsitzung</span>
+      </div>
+      <div class="offer-card">
+        <div class="offer-icon">✨</div>
+        <h3>Mediale Begleitung</h3>
+        <p>Feinfühlige Unterstützung auf dem Weg zu mehr Klarheit, innerer Führung und seelischer Ausrichtung.</p>
+        <span class="offer-badge">Einzelsitzung</span>
+      </div>
+    </div>
+
+    <div id="panel-atem" class="offer-panel">
+      <div class="offer-card">
+        <div class="offer-icon">🌬</div>
+        <h3>Atemarbeit</h3>
+        <p>Der Atem als direkter Zugang zur Lebensenergie – bewusste Atemtechniken zur Regulierung und Vitalisierung.</p>
+      </div>
+      <div class="offer-card">
+        <div class="offer-icon">⚡</div>
+        <h3>Energiearbeit</h3>
+        <p>Arbeit mit dem feinstofflichen Körper, Chakras und dem persönlichen Energiefeld.</p>
+      </div>
+      <div class="offer-card">
+        <div class="offer-icon">🌸</div>
+        <h3>Chakraarbeit</h3>
+        <p>Harmonisierung und Aktivierung der Energiezentren für mehr innere Balance und Vitalität.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VERANSTALTUNGEN -->
+<section id="termine">
+  <div class="section-inner">
+    <p class="section-label">Veranstaltungen</p>
+    <h2>Aktuelle <em>Events &amp; Retreats</em></h2>
+    <p class="section-intro">Workshops, Meditationsabende und Retreats – Räume für gemeinsames Wachsen und tiefe Erfahrungen.</p>
+    <div class="events-grid" id="eventsGrid">
+      <!-- filled by JS -->
+    </div>
+    <br><br>
+    <a href="#buchung" class="btn-primary">Platz reservieren</a>
+  </div>
+</section>
+
+<!-- TERMINBUCHUNG -->
+<section id="buchung">
+  <div class="section-inner">
+    <p class="section-label">Terminbuchung</p>
+    <h2>Deinen Termin <em>wählen</em></h2>
+    <p class="section-intro">Wähle einen Termin im Kalender und sende mir deine Anfrage – ich melde mich schnellstmöglich bei dir.</p>
+    <div class="booking-grid">
+      <div>
+        <div class="calendar-wrap">
+          <div class="cal-header">
+            <button class="cal-nav" onclick="changeMonth(-1)">‹</button>
+            <span class="cal-title" id="calTitle"></span>
+            <button class="cal-nav" onclick="changeMonth(1)">›</button>
+          </div>
+          <div class="cal-days-header">
+            <div class="cal-day-name">Mo</div>
+            <div class="cal-day-name">Di</div>
+            <div class="cal-day-name">Mi</div>
+            <div class="cal-day-name">Do</div>
+            <div class="cal-day-name">Fr</div>
+            <div class="cal-day-name">Sa</div>
+            <div class="cal-day-name">So</div>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+        </div>
+        <div class="event-list-mini" id="eventListMini">
+          <h4>Geplante Termine</h4>
+        </div>
+        <details class="admin-toggle">
+          <summary>&#9998; Termin verwalten (Admin)</summary>
+          <div class="admin-panel">
+            <p>Trage hier neue Termine ein – sie erscheinen sofort im Kalender.</p>
+            <div class="admin-event-form" id="adminForm">
+              <input type="date" id="evDate" placeholder="Datum">
+              <input type="text" id="evType" placeholder="Art (z.B. Workshop)">
+              <input type="text" id="evTitle" class="full" placeholder="Titel des Termins">
+              <input type="text" id="evTime" placeholder="Uhrzeit (z.B. 10:00)">
+              <input type="text" id="evPlace" placeholder="Ort">
+            </div>
+            <button class="btn-small" onclick="addEvent()">Termin hinzufügen</button>
+          </div>
+        </details>
+      </div>
+      <div class="booking-form">
+        <p class="selected-date-display" id="selectedDateDisplay">Bitte Datum im Kalender wählen</p>
+        <div class="form-group">
+          <label>Dein Name</label>
+          <input type="text" id="bName" placeholder="Vorname Nachname">
+        </div>
+        <div class="form-group">
+          <label>E-Mail oder WhatsApp</label>
+          <input type="text" id="bContact" placeholder="deine@email.de oder +49...">
+        </div>
+        <div class="form-group">
+          <label>Gewünschtes Angebot</label>
+          <select id="bService">
+            <option value="">— bitte wählen —</option>
+            <option>Yoga</option>
+            <option>Pilates</option>
+            <option>Faszientraining</option>
+            <option>Meditation</option>
+            <option>Körperarbeit (Einzelsitzung)</option>
+            <option>Systemische Aufstellung</option>
+            <option>Mediale Begleitung</option>
+            <option>Atem- &amp; Energiearbeit</option>
+            <option>Event / Workshop</option>
+            <option>Retreat</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Nachricht (optional)</label>
+          <textarea id="bMsg" placeholder="Was bewegt dich gerade? Was wünschst du dir?"></textarea>
+        </div>
+        <button class="btn-primary" onclick="submitBooking()" style="width:100%">Anfrage senden</button>
+        <div id="bookingConfirm" style="display:none; margin-top:1rem; padding:1rem; background:rgba(174,189,163,0.2); border:1px solid rgba(174,189,163,0.4); border-radius:2px; font-family:Helvetica Neue,Arial,sans-serif; font-size:0.85rem; color:#5a7a50;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ONLINE -->
+<section id="online">
+  <div class="section-inner">
+    <p class="section-label">Online-Angebote</p>
+    <h2>Digital &amp; <em>flexibel</em></h2>
+    <p class="section-intro">Meine Angebote – bald auch online verfügbar. Trag dich in die Warteliste ein und erfahre als Erste/r davon.</p>
+    <div class="online-grid">
+      <div class="online-card">
+        <span class="soon">In Vorbereitung</span>
+        <h3>Online-Kurse</h3>
+        <p>Yoga, Pilates und Meditationskurse zum selbst bestimmten Lernen – von überall.</p>
+      </div>
+      <div class="online-card">
+        <span class="soon">In Vorbereitung</span>
+        <h3>Videos &amp; Programme</h3>
+        <p>Geführte Übungssequenzen und transformative Programme als Video-Bibliothek.</p>
+      </div>
+      <div class="online-card">
+        <span class="soon">In Vorbereitung</span>
+        <h3>Online-Buchung</h3>
+        <p>Direktbuchung und -kauf für Kurse und Einzelsitzungen – einfach und sicher.</p>
+      </div>
+    </div>
+    <br><br>
+    <div class="form-group" style="max-width:380px; display:flex; gap:0.8rem;">
+      <input type="email" id="waitlistEmail" placeholder="deine@email.de" style="flex:1;">
+      <button class="btn-primary" onclick="joinWaitlist()">Eintragen</button>
+    </div>
+    <div id="waitlistConfirm" style="display:none; font-family:Helvetica Neue,Arial,sans-serif; font-size:0.83rem; color:#6a8a60; margin-top:0.5rem;"></div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section id="kontakt">
+  <div class="section-inner">
+    <div class="kontakt-grid">
+      <div class="kontakt-info">
+        <p class="section-label">Kontakt</p>
+        <h2>Lass uns <em>verbinden</em></h2>
+        <div class="ornament">· · ·</div>
+        <p style="font-size:0.95rem; color:var(--muted); margin-bottom:2rem;">Ich freue mich auf deine Nachricht – ob per E-Mail, WhatsApp oder Telefon. Der erste Schritt ist oft der wichtigste.</p>
+        <div class="kontakt-item">
+          <span class="kontakt-icon">📞</span>
+          <div><strong>Telefon</strong><a href="tel:+491709042651">+49 170 904 2651</a></div>
+        </div>
+        <div class="kontakt-item">
+          <span class="kontakt-icon">✉</span>
+          <div><strong>E-Mail</strong><a href="mailto:a.szabo@hotmail.de">a.szabo@hotmail.de</a></div>
+        </div>
+        <div class="kontakt-item">
+          <span class="kontakt-icon">🌐</span>
+          <div><strong>Website</strong><a href="http://www.natuerlichinbewegung.de">www.natuerlichinbewegung.de</a></div>
+        </div>
+        <div class="kontakt-item">
+          <span class="kontakt-icon">💬</span>
+          <div><strong>Bevorzugt</strong>WhatsApp oder E-Mail</div>
+        </div>
+      </div>
+      <div class="kontakt-form">
+        <h3>Nachricht senden</h3>
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" id="kName" placeholder="Dein Name">
+        </div>
+        <div class="form-group">
+          <label>E-Mail</label>
+          <input type="email" id="kEmail" placeholder="deine@email.de">
+        </div>
+        <div class="form-group">
+          <label>Nachricht</label>
+          <textarea id="kMsg" placeholder="Wie kann ich dich unterstützen?"></textarea>
+        </div>
+        <button class="btn-primary" onclick="sendContact()" style="width:100%">Nachricht senden</button>
+        <button class="whatsapp-btn" onclick="openWhatsApp()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Direkt per WhatsApp
+        </button>
+        <div id="contactConfirm" style="display:none; margin-top:0.8rem; padding:0.8rem; background:rgba(174,189,163,0.2); border:1px solid rgba(174,189,163,0.4); border-radius:2px; font-family:Helvetica Neue,Arial,sans-serif; font-size:0.83rem; color:#5a7a50;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">Natürlich in Bewegung · Anett Szabo</span>
+    <nav class="footer-links">
+      <a href="#about">Über mich</a>
+      <a href="#angebote">Angebote</a>
+      <a href="#termine">Termine</a>
+      <a href="#kontakt">Kontakt</a>
+      <a href="#">Impressum</a>
+      <a href="#">Datenschutz</a>
+    </nav>
+    <span class="footer-copy">© 2025 natuerlichinbewegung.de</span>
+  </div>
+</footer>
+
+<script>
+const today = new Date();
+let eventsData = [
+  { date: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 5), type: 'Meditation', title: 'Abendmeditation – Stille finden', time: '19:00', place: 'Praxis' },
+  { date: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 12), type: 'Workshop', title: 'Atemworkshop – Kraft des Atems', time: '10:00', place: 'Praxis' },
+  { date: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 20), type: 'Retreat', title: 'Wochenendseminar Innere Mitte', time: 'ganztags', place: 'Seminarhaus' },
+  { date: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 28), type: 'Yoga', title: 'Yoga-Special: Chakra & Körper', time: '11:00', place: 'Praxis' },
+];
+
+const months = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+const de_months_short = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+
+let calYear = today.getFullYear();
+let calMonth = today.getMonth();
+let selectedDate = null;
+
+function renderCalendar() {
+  document.getElementById('calTitle').textContent = months[calMonth] + ' ' + calYear;
+  const grid = document.getElementById('calGrid');
+  grid.innerHTML = '';
+  const first = new Date(calYear, calMonth, 1);
+  let startDay = first.getDay();
+  startDay = startDay === 0 ? 6 : startDay - 1;
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+  for (let i = 0; i < startDay; i++) {
+    const el = document.createElement('div');
+    el.className = 'cal-cell empty';
+    grid.appendChild(el);
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    const el = document.createElement('div');
+    el.className = 'cal-cell';
+    el.textContent = d;
+    const thisDate = new Date(calYear, calMonth, d);
+    if (thisDate.toDateString() === today.toDateString()) el.classList.add('today');
+    const hasEv = eventsData.some(e => e.date.toDateString() === thisDate.toDateString());
+    if (hasEv) el.classList.add('has-event');
+    if (selectedDate && thisDate.toDateString() === selectedDate.toDateString()) el.classList.add('selected');
+    el.onclick = () => selectDate(new Date(calYear, calMonth, d));
+    grid.appendChild(el);
+  }
+  renderMiniList();
+  renderEventsGrid();
+}
+
+function selectDate(d) {
+  selectedDate = d;
+  const label = d.getDate() + '. ' + months[d.getMonth()] + ' ' + d.getFullYear();
+  document.getElementById('selectedDateDisplay').textContent = 'Gewähltes Datum: ' + label;
+  renderCalendar();
+}
+
+function changeMonth(dir) {
+  calMonth += dir;
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  if (calMonth < 0) { calMonth = 11; calYear--; }
+  renderCalendar();
+}
+
+function renderMiniList() {
+  const container = document.getElementById('eventListMini');
+  container.innerHTML = '<h4>Geplante Termine</h4>';
+  const upcoming = eventsData.filter(e => e.date >= today).sort((a,b) => a.date - b.date).slice(0,4);
+  if (upcoming.length === 0) { container.innerHTML += '<p style="font-family:Helvetica Neue,Arial,sans-serif;font-size:0.83rem;color:var(--muted);margin-top:0.5rem;">Noch keine Termine eingetragen.</p>'; return; }
+  upcoming.forEach(e => {
+    const el = document.createElement('div');
+    el.className = 'event-mini-item';
+    el.innerHTML = `<div class="event-mini-dot"></div><div><strong style="color:var(--text)">${e.date.getDate()}. ${de_months_short[e.date.getMonth()]}</strong> · ${e.title}</div>`;
+    container.appendChild(el);
+  });
+}
+
+function renderEventsGrid() {
+  const grid = document.getElementById('eventsGrid');
+  grid.innerHTML = '';
+  const upcoming = eventsData.filter(e => e.date >= today).sort((a,b) => a.date - b.date).slice(0,4);
+  if (upcoming.length === 0) {
+    grid.innerHTML = '<p style="font-family:Helvetica Neue,Arial,sans-serif;font-size:0.9rem;color:var(--muted);">Neue Termine folgen bald.</p>';
+    return;
+  }
+  upcoming.forEach(e => {
+    const el = document.createElement('div');
+    el.className = 'event-item';
+    el.innerHTML = `<div class="event-date"><div class="event-day">${e.date.getDate()}</div><div class="event-month">${de_months_short[e.date.getMonth()]} ${e.date.getFullYear()}</div></div><div class="event-info"><span class="event-type">${e.type}</span><h4>${e.title}</h4><p>${e.time} Uhr · ${e.place}</p></div>`;
+    grid.appendChild(el);
+  });
+}
+
+function addEvent() {
+  const d = document.getElementById('evDate').value;
+  const title = document.getElementById('evTitle').value.trim();
+  const type = document.getElementById('evType').value.trim() || 'Termin';
+  const time = document.getElementById('evTime').value.trim() || 'TBA';
+  const place = document.getElementById('evPlace').value.trim() || '';
+  if (!d || !title) { alert('Bitte mindestens Datum und Titel angeben.'); return; }
+  const parts = d.split('-');
+  eventsData.push({ date: new Date(+parts[0], +parts[1]-1, +parts[2]), type, title, time, place });
+  ['evDate','evTitle','evType','evTime','evPlace'].forEach(id => document.getElementById(id).value = '');
+  renderCalendar();
+}
+
+function submitBooking() {
+  const name = document.getElementById('bName').value.trim();
+  const contact = document.getElementById('bContact').value.trim();
+  const service = document.getElementById('bService').value;
+  if (!name || !contact || !service) { alert('Bitte Name, Kontakt und Angebot ausfüllen.'); return; }
+  const dateStr = selectedDate ? selectedDate.getDate() + '. ' + months[selectedDate.getMonth()] + ' ' + selectedDate.getFullYear() : 'offen';
+  const conf = document.getElementById('bookingConfirm');
+  conf.style.display = 'block';
+  conf.innerHTML = `Danke, ${name}! Deine Anfrage für <strong>${service}</strong> am <strong>${dateStr}</strong> ist eingegangen. Ich melde mich bald bei dir.`;
+}
+
+function sendContact() {
+  const name = document.getElementById('kName').value.trim();
+  const email = document.getElementById('kEmail').value.trim();
+  const msg = document.getElementById('kMsg').value.trim();
+  if (!name || !email) { alert('Bitte Name und E-Mail angeben.'); return; }
+  const conf = document.getElementById('contactConfirm');
+  conf.style.display = 'block';
+  conf.innerHTML = `Vielen Dank, ${name}! Ich habe deine Nachricht erhalten und melde mich so bald wie möglich.`;
+  const mailto = `mailto:a.szabo@hotmail.de?subject=Kontaktanfrage von ${encodeURIComponent(name)}&body=${encodeURIComponent(msg + '\n\nVon: ' + name + ' (' + email + ')')}`;
+  window.location.href = mailto;
+}
+
+function openWhatsApp() {
+  window.open('https://wa.me/491709042651?text=Hallo%20Anett%2C%20ich%20m%C3%B6chte%20gerne%20einen%20Termin%20vereinbaren.', '_blank');
+}
+
+function switchTab(id) {
+  document.querySelectorAll('.offer-tab').forEach((t,i) => {
+    const ids = ['kurse','einzel','atem'];
+    t.classList.toggle('active', ids[i] === id);
+  });
+  document.querySelectorAll('.offer-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+}
+
+function joinWaitlist() {
+  const email = document.getElementById('waitlistEmail').value.trim();
+  if (!email || !email.includes('@')) { alert('Bitte eine gültige E-Mail eingeben.'); return; }
+  const conf = document.getElementById('waitlistConfirm');
+  conf.style.display = 'block';
+  conf.textContent = 'Du bist auf der Warteliste! Ich informiere dich, sobald die Online-Angebote live gehen.';
+  document.getElementById('waitlistEmail').value = '';
+}
+
+function toggleMenu() { alert('Mobile Navigation: Über mich · Angebote · Termine · Online · Kontakt'); }
+
+renderCalendar();
+</script>
+</body>
+</html>
