@@ -1,0 +1,5 @@
+Options -Indexes
+# Nur die Terminliste ist öffentlich lesbar
+<FilesMatch "^(?!termine\.json$).*$">
+  Require all denied
+</FilesMatch>

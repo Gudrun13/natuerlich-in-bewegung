@@ -50,7 +50,7 @@
   a { color: inherit; text-decoration: none; }
 
   /* NAV */
-  nav { position: fixed; top: 0; width: 100%; background: rgba(245,241,232,0.96); backdrop-filter: blur(6px); border-bottom: 1px solid var(--border); z-index: 100; height: var(--nav-h); display: flex; align-items: center; }
+  body > nav { position: fixed; top: 0; width: 100%; background: rgba(245,241,232,0.96); backdrop-filter: blur(6px); border-bottom: 1px solid var(--border); z-index: 100; height: var(--nav-h); display: flex; align-items: center; }
   .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; width: 100%; }
   .logo { display: flex; align-items: center; }
   .logo-img { height: 48px; width: auto; display: block; }
@@ -61,6 +61,15 @@
   .nav-cta:hover { background: #967fa8; }
   .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
   .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--text); }
+
+  .only-mobile { display: none; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .form-msg { margin-top: 1rem; padding: 0.9rem 1rem; border-radius: 2px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.85rem; line-height: 1.5; }
+  .form-msg[hidden] { display: none; }
+  .form-msg.ok { background: rgba(174,189,163,0.2); border: 1px solid rgba(174,189,163,0.5); color: #4d6a43; }
+  .form-msg.err { background: #f8e8e8; border: 1px solid #e3c4c4; color: #8a3a3a; }
+  .form-msg.info { background: rgba(169,150,184,0.12); border: 1px solid rgba(169,150,184,0.35); color: var(--muted); }
+  button:disabled { opacity: 0.6; cursor: wait; }
 
   /* HERO */
   .hero { padding-top: var(--nav-h); min-height: 100vh; display: flex; align-items: center; background: linear-gradient(160deg, #EDE8DC 0%, #F5F1E8 60%, #E8E2F0 100%); position: relative; overflow: hidden; }
@@ -139,6 +148,8 @@
   .cal-cell { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.83rem; border-radius: 2px; cursor: pointer; transition: all 0.15s; color: var(--text); background: transparent; border: 1px solid transparent; }
   .cal-cell:hover { background: rgba(169,150,184,0.1); border-color: var(--primary); }
   .cal-cell.empty { cursor: default; }
+  .cal-cell.past { opacity: 0.35; cursor: default; }
+  .cal-cell.past:hover { background: none; border-color: transparent; }
   .cal-cell.today { background: rgba(169,150,184,0.2); font-weight: bold; }
   .cal-cell.has-event { background: rgba(174,189,163,0.25); border-color: rgba(174,189,163,0.5); }
   .cal-cell.has-event::after { content: '·'; position: absolute; bottom: 2px; font-size: 18px; color: var(--secondary); }
@@ -155,15 +166,6 @@
   .event-list-mini h4 { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.8rem; }
   .event-mini-item { display: flex; gap: 0.8rem; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.83rem; }
   .event-mini-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--secondary); flex-shrink: 0; }
-  .admin-toggle { margin-top: 1.5rem; }
-  .admin-toggle summary { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); cursor: pointer; user-select: none; }
-  .admin-panel { background: var(--bg); border: 1px solid var(--border); border-radius: 2px; padding: 1rem; margin-top: 0.8rem; }
-  .admin-panel p { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: var(--muted); margin-bottom: 0.8rem; }
-  .admin-event-form { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
-  .admin-event-form input { padding: 7px 10px; border: 1px solid var(--border); border-radius: 2px; font-size: 0.82rem; background: var(--card); color: var(--text); outline: none; }
-  .admin-event-form input:focus { border-color: var(--primary); }
-  .admin-event-form input.full { grid-column: 1 / -1; }
-  .btn-small { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; background: var(--secondary); color: #fff; border: none; padding: 7px 16px; border-radius: 2px; cursor: pointer; margin-top: 0.4rem; }
 
   /* ONLINE */
   #online { background: var(--card); }
@@ -202,14 +204,15 @@
   @media (max-width: 768px) {
     .nav-links, .nav-cta { display: none; }
     .hamburger { display: flex; }
+    .nav-links.open { display: flex; flex-direction: column; gap: 0; position: absolute; top: 100%; left: 0; right: 0; background: rgba(245,241,232,0.98); border-bottom: 1px solid var(--border); padding: 0.4rem 2rem 1rem; }
+    .nav-links.open li a { display: block; padding: 0.9rem 0; }
+    .nav-links.open .only-mobile { display: block; }
     .about-grid, .booking-grid, .kontakt-grid, .events-grid { grid-template-columns: 1fr; }
     .about-circle { width: 200px; height: 200px; }
     .about-photo { width: 240px; height: 240px; }
     .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
     .hero-emblem { transform: none; }
     .hero-emblem img { width: 200px; }
-    .admin-event-form { grid-template-columns: 1fr; }
-    .admin-event-form input.full { grid-column: 1; }
     .offer-tabs { overflow-x: auto; width: 100%; }
   }
 </style>
@@ -219,15 +222,16 @@
 <nav>
   <div class="nav-inner">
     <a href="#" class="logo"><img src="assets/logo.png" alt="Anima Absoluta – Anett Szabó" class="logo-img"></a>
-    <ul class="nav-links">
+    <ul class="nav-links" id="navLinks">
       <li><a href="#about">Über mich</a></li>
       <li><a href="#angebote">Angebote</a></li>
       <li><a href="#termine">Termine</a></li>
       <li><a href="#online">Online</a></li>
       <li><a href="#kontakt">Kontakt</a></li>
+      <li class="only-mobile"><a href="#buchung">Termin buchen</a></li>
     </ul>
     <a href="#buchung" class="nav-cta">Termin buchen</a>
-    <button class="hamburger" onclick="toggleMenu()" aria-label="Menü">
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menü" aria-expanded="false" aria-controls="navLinks">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -401,20 +405,6 @@
         <div class="event-list-mini" id="eventListMini">
           <h4>Geplante Termine</h4>
         </div>
-        <details class="admin-toggle">
-          <summary>&#9998; Termin verwalten (Admin)</summary>
-          <div class="admin-panel">
-            <p>Trage hier neue Termine ein – sie erscheinen sofort im Kalender.</p>
-            <div class="admin-event-form" id="adminForm">
-              <input type="date" id="evDate" placeholder="Datum">
-              <input type="text" id="evType" placeholder="Art (z.B. Workshop)">
-              <input type="text" id="evTitle" class="full" placeholder="Titel des Termins">
-              <input type="text" id="evTime" placeholder="Uhrzeit (z.B. 10:00)">
-              <input type="text" id="evPlace" placeholder="Ort">
-            </div>
-            <button class="btn-small" onclick="addEvent()">Termin hinzufügen</button>
-          </div>
-        </details>
       </div>
       <div class="booking-form">
         <p class="selected-date-display" id="selectedDateDisplay">Bitte Datum im Kalender wählen</p>
@@ -446,8 +436,9 @@
           <label>Nachricht (optional)</label>
           <textarea id="bMsg" placeholder="Was bewegt dich gerade? Was wünschst du dir?"></textarea>
         </div>
-        <button class="btn-primary" onclick="submitBooking()" style="width:100%">Anfrage senden</button>
-        <div id="bookingConfirm" style="display:none; margin-top:1rem; padding:1rem; background:rgba(174,189,163,0.2); border:1px solid rgba(174,189,163,0.4); border-radius:2px; font-family:Helvetica Neue,Arial,sans-serif; font-size:0.85rem; color:#5a7a50;"></div>
+        <div class="hp" aria-hidden="true"><label>Website<input type="text" id="hpBuchung" tabindex="-1" autocomplete="off"></label></div>
+        <button class="btn-primary" id="btnBuchung" onclick="submitBooking(this)" style="width:100%">Anfrage senden</button>
+        <div id="bookingConfirm" class="form-msg" role="status" hidden></div>
       </div>
     </div>
   </div>
@@ -479,9 +470,10 @@
     <br><br>
     <div class="form-group" style="max-width:380px; display:flex; gap:0.8rem;">
       <input type="email" id="waitlistEmail" placeholder="deine@email.de" style="flex:1;">
-      <button class="btn-primary" onclick="joinWaitlist()">Eintragen</button>
+      <button class="btn-primary" id="btnWarteliste" onclick="joinWaitlist(this)">Eintragen</button>
     </div>
-    <div id="waitlistConfirm" style="display:none; font-family:Helvetica Neue,Arial,sans-serif; font-size:0.83rem; color:#6a8a60; margin-top:0.5rem;"></div>
+    <div class="hp" aria-hidden="true"><label>Website<input type="text" id="hpWarteliste" tabindex="-1" autocomplete="off"></label></div>
+    <div id="waitlistConfirm" class="form-msg" role="status" hidden></div>
   </div>
 </section>
 
@@ -525,12 +517,13 @@
           <label>Nachricht</label>
           <textarea id="kMsg" placeholder="Wie kann ich dich unterstützen?"></textarea>
         </div>
-        <button class="btn-primary" onclick="sendContact()" style="width:100%">Nachricht senden</button>
+        <div class="hp" aria-hidden="true"><label>Website<input type="text" id="hpKontakt" tabindex="-1" autocomplete="off"></label></div>
+        <button class="btn-primary" id="btnKontakt" onclick="sendContact(this)" style="width:100%">Nachricht senden</button>
         <button class="whatsapp-btn" onclick="openWhatsApp()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           Direkt per WhatsApp
         </button>
-        <div id="contactConfirm" style="display:none; margin-top:0.8rem; padding:0.8rem; background:rgba(174,189,163,0.2); border:1px solid rgba(174,189,163,0.4); border-radius:2px; font-family:Helvetica Neue,Arial,sans-serif; font-size:0.83rem; color:#5a7a50;"></div>
+        <div id="contactConfirm" class="form-msg" role="status" hidden></div>
       </div>
     </div>
   </div>
@@ -554,12 +547,27 @@
 
 <script>
 const today = new Date();
-let eventsData = [
-  { date: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 5), type: 'Meditation', title: 'Abendmeditation – Stille finden', time: '19:00', place: 'Praxis' },
-  { date: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 12), type: 'Workshop', title: 'Atemworkshop – Kraft des Atems', time: '10:00', place: 'Praxis' },
-  { date: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 20), type: 'Retreat', title: 'Wochenendseminar Innere Mitte', time: 'ganztags', place: 'Seminarhaus' },
-  { date: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 28), type: 'Yoga', title: 'Yoga-Special: Chakra & Körper', time: '11:00', place: 'Praxis' },
-];
+today.setHours(0, 0, 0, 0);
+const seitenstart = Date.now();
+let eventsData = [];
+
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+async function loadEvents() {
+  try {
+    const r = await fetch('data/termine.json', { cache: 'no-store' });
+    if (r.ok) {
+      const liste = await r.json();
+      eventsData = (Array.isArray(liste) ? liste : []).map(e => {
+        const p = String(e.date || '').split('-');
+        return { type: e.type || 'Termin', title: e.title || '', time: e.time || '', place: e.place || '', date: new Date(+p[0], +p[1] - 1, +p[2]) };
+      }).filter(e => !isNaN(e.date) && e.title);
+    }
+  } catch (err) { /* ohne Termine weiter */ }
+  renderCalendar();
+}
 
 const months = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
 const de_months_short = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
@@ -590,7 +598,8 @@ function renderCalendar() {
     const hasEv = eventsData.some(e => e.date.toDateString() === thisDate.toDateString());
     if (hasEv) el.classList.add('has-event');
     if (selectedDate && thisDate.toDateString() === selectedDate.toDateString()) el.classList.add('selected');
-    el.onclick = () => selectDate(new Date(calYear, calMonth, d));
+    if (thisDate < today) { el.classList.add('past'); el.setAttribute('aria-disabled', 'true'); }
+    else { el.onclick = () => selectDate(new Date(calYear, calMonth, d)); }
     grid.appendChild(el);
   }
   renderMiniList();
@@ -619,7 +628,7 @@ function renderMiniList() {
   upcoming.forEach(e => {
     const el = document.createElement('div');
     el.className = 'event-mini-item';
-    el.innerHTML = `<div class="event-mini-dot"></div><div><strong style="color:var(--text)">${e.date.getDate()}. ${de_months_short[e.date.getMonth()]}</strong> · ${e.title}</div>`;
+    el.innerHTML = `<div class="event-mini-dot"></div><div><strong style="color:var(--text)">${e.date.getDate()}. ${de_months_short[e.date.getMonth()]}</strong> · ${esc(e.title)}</div>`;
     container.appendChild(el);
   });
 }
@@ -635,46 +644,98 @@ function renderEventsGrid() {
   upcoming.forEach(e => {
     const el = document.createElement('div');
     el.className = 'event-item';
-    el.innerHTML = `<div class="event-date"><div class="event-day">${e.date.getDate()}</div><div class="event-month">${de_months_short[e.date.getMonth()]} ${e.date.getFullYear()}</div></div><div class="event-info"><span class="event-type">${e.type}</span><h4>${e.title}</h4><p>${e.time} Uhr · ${e.place}</p></div>`;
+    el.innerHTML = `<div class="event-date"><div class="event-day">${e.date.getDate()}</div><div class="event-month">${de_months_short[e.date.getMonth()]} ${e.date.getFullYear()}</div></div><div class="event-info"><span class="event-type">${esc(e.type)}</span><h4>${esc(e.title)}</h4><p>${esc([e.time ? (/^\d{1,2}[:.]\d{2}$/.test(e.time) ? e.time + ' Uhr' : e.time) : '', e.place].filter(Boolean).join(' · '))}</p></div>`;
     grid.appendChild(el);
   });
 }
 
-function addEvent() {
-  const d = document.getElementById('evDate').value;
-  const title = document.getElementById('evTitle').value.trim();
-  const type = document.getElementById('evType').value.trim() || 'Termin';
-  const time = document.getElementById('evTime').value.trim() || 'TBA';
-  const place = document.getElementById('evPlace').value.trim() || '';
-  if (!d || !title) { alert('Bitte mindestens Datum und Titel angeben.'); return; }
-  const parts = d.split('-');
-  eventsData.push({ date: new Date(+parts[0], +parts[1]-1, +parts[2]), type, title, time, place });
-  ['evDate','evTitle','evType','evTime','evPlace'].forEach(id => document.getElementById(id).value = '');
-  renderCalendar();
+const FEHLER_ALLGEMEIN = 'Das hat leider nicht geklappt. Bitte schreib mir direkt per E-Mail an a.szabo@hotmail.de oder per WhatsApp.';
+
+function zeigeMeldung(el, text, art) {
+  el.hidden = false;
+  el.className = 'form-msg ' + art;
+  el.textContent = text;
 }
 
-function submitBooking() {
+async function sendeAnfrage(typ, felder, honeypotId, btn, msgEl) {
+  const body = new URLSearchParams(Object.assign({
+    typ: typ,
+    dauer: String(Date.now() - seitenstart),
+    website: document.getElementById(honeypotId).value
+  }, felder));
+  zeigeMeldung(msgEl, 'Wird gesendet …', 'info');
+  btn.disabled = true;
+  try {
+    const r = await fetch('api/anfrage.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body
+    });
+    let daten = {};
+    try { daten = await r.json(); } catch (e) { /* keine JSON-Antwort */ }
+    if (r.ok && daten.ok) { return true; }
+    zeigeMeldung(msgEl, daten.message || FEHLER_ALLGEMEIN, 'err');
+    return false;
+  } catch (e) {
+    zeigeMeldung(msgEl, FEHLER_ALLGEMEIN, 'err');
+    return false;
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+async function submitBooking(btn) {
   const name = document.getElementById('bName').value.trim();
-  const contact = document.getElementById('bContact').value.trim();
-  const service = document.getElementById('bService').value;
-  if (!name || !contact || !service) { alert('Bitte Name, Kontakt und Angebot ausfüllen.'); return; }
-  const dateStr = selectedDate ? selectedDate.getDate() + '. ' + months[selectedDate.getMonth()] + ' ' + selectedDate.getFullYear() : 'offen';
-  const conf = document.getElementById('bookingConfirm');
-  conf.style.display = 'block';
-  conf.innerHTML = `Danke, ${name}! Deine Anfrage für <strong>${service}</strong> am <strong>${dateStr}</strong> ist eingegangen. Ich melde mich bald bei dir.`;
+  const kontakt = document.getElementById('bContact').value.trim();
+  const angebot = document.getElementById('bService').value;
+  const msgEl = document.getElementById('bookingConfirm');
+  if (!name || !kontakt || !angebot) { zeigeMeldung(msgEl, 'Bitte Name, Kontakt und Angebot ausfüllen.', 'err'); return; }
+  const datum = selectedDate ? selectedDate.getDate() + '. ' + months[selectedDate.getMonth()] + ' ' + selectedDate.getFullYear() : '';
+  const ok = await sendeAnfrage('buchung', {
+    name: name, kontakt: kontakt, angebot: angebot, datum: datum,
+    nachricht: document.getElementById('bMsg').value
+  }, 'hpBuchung', btn, msgEl);
+  if (ok) {
+    zeigeMeldung(msgEl, 'Danke, ' + name + '! Deine Anfrage für ' + angebot + (datum ? ' am ' + datum : '') + ' ist bei mir angekommen. Ich melde mich bald bei dir.', 'ok');
+    ['bName', 'bContact', 'bMsg'].forEach(id => { document.getElementById(id).value = ''; });
+    document.getElementById('bService').value = '';
+  }
 }
 
-function sendContact() {
+async function sendContact(btn) {
   const name = document.getElementById('kName').value.trim();
   const email = document.getElementById('kEmail').value.trim();
-  const msg = document.getElementById('kMsg').value.trim();
-  if (!name || !email) { alert('Bitte Name und E-Mail angeben.'); return; }
-  const conf = document.getElementById('contactConfirm');
-  conf.style.display = 'block';
-  conf.innerHTML = `Vielen Dank, ${name}! Ich habe deine Nachricht erhalten und melde mich so bald wie möglich.`;
-  const mailto = `mailto:a.szabo@hotmail.de?subject=Kontaktanfrage von ${encodeURIComponent(name)}&body=${encodeURIComponent(msg + '\n\nVon: ' + name + ' (' + email + ')')}`;
-  window.location.href = mailto;
+  const msgEl = document.getElementById('contactConfirm');
+  if (!name || !email) { zeigeMeldung(msgEl, 'Bitte Name und E-Mail angeben.', 'err'); return; }
+  const ok = await sendeAnfrage('kontakt', {
+    name: name, email: email, nachricht: document.getElementById('kMsg').value
+  }, 'hpKontakt', btn, msgEl);
+  if (ok) {
+    zeigeMeldung(msgEl, 'Vielen Dank, ' + name + '! Deine Nachricht ist bei mir angekommen. Ich melde mich so bald wie möglich.', 'ok');
+    ['kName', 'kEmail', 'kMsg'].forEach(id => { document.getElementById(id).value = ''; });
+  }
 }
+
+async function joinWaitlist(btn) {
+  const email = document.getElementById('waitlistEmail').value.trim();
+  const msgEl = document.getElementById('waitlistConfirm');
+  if (!email || !email.includes('@')) { zeigeMeldung(msgEl, 'Bitte eine gültige E-Mail-Adresse eingeben.', 'err'); return; }
+  const ok = await sendeAnfrage('warteliste', { email: email }, 'hpWarteliste', btn, msgEl);
+  if (ok) {
+    zeigeMeldung(msgEl, 'Danke! Ich habe deine Adresse notiert und melde mich, sobald die Online-Angebote starten.', 'ok');
+    document.getElementById('waitlistEmail').value = '';
+  }
+}
+
+function toggleMenu(erzwingen) {
+  const nav = document.getElementById('navLinks');
+  const btn = document.querySelector('.hamburger');
+  const offen = typeof erzwingen === 'boolean' ? erzwingen : !nav.classList.contains('open');
+  nav.classList.toggle('open', offen);
+  btn.setAttribute('aria-expanded', String(offen));
+}
+document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') toggleMenu(false); });
 
 function openWhatsApp() {
   window.open('https://wa.me/491709042651?text=Hallo%20Anett%2C%20ich%20m%C3%B6chte%20gerne%20einen%20Termin%20vereinbaren.', '_blank');
@@ -689,18 +750,9 @@ function switchTab(id) {
   document.getElementById('panel-' + id).classList.add('active');
 }
 
-function joinWaitlist() {
-  const email = document.getElementById('waitlistEmail').value.trim();
-  if (!email || !email.includes('@')) { alert('Bitte eine gültige E-Mail eingeben.'); return; }
-  const conf = document.getElementById('waitlistConfirm');
-  conf.style.display = 'block';
-  conf.textContent = 'Du bist auf der Warteliste! Ich informiere dich, sobald die Online-Angebote live gehen.';
-  document.getElementById('waitlistEmail').value = '';
-}
-
-function toggleMenu() { alert('Mobile Navigation: Über mich · Angebote · Termine · Online · Kontakt'); }
 
 renderCalendar();
+loadEvents();
 </script>
 </body>
 </html>

@@ -1,0 +1,5 @@
+# Wird nur auf dem Server angelegt, nie ins Repository
+private/config.php
+private/*.json
+data/termine.json
+*.tmp
