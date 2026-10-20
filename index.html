@@ -23,7 +23,7 @@
   "name": "Anima Absoluta",
   "alternateName": "Anett Szabó – Anima Absoluta",
   "url": "https://www.animaabsoluta.de/",
-  "image": "https://www.animaabsoluta.de/assets/anett.jpg",
+  "image": "https://www.animaabsoluta.de/assets/anett-portrait.jpg",
   "logo": "https://www.animaabsoluta.de/assets/logo.png",
   "description": "Ganzheitliche Körperarbeit, Yoga, Pilates, Meditation, Faszientraining und bewusste Prozessbegleitung in Leipzig und online.",
   "telephone": "+491709042651",
@@ -75,7 +75,7 @@
   .hero { padding-top: var(--nav-h); min-height: 100vh; display: flex; align-items: center; background: linear-gradient(160deg, #EDE8DC 0%, #F5F1E8 60%, #E8E2F0 100%); position: relative; overflow: hidden; }
   .hero::before { content: ''; position: absolute; right: -100px; top: 50%; transform: translateY(-50%); width: 500px; height: 500px; border-radius: 50%; background: rgba(169,150,184,0.1); }
   .hero::after { content: ''; position: absolute; right: 80px; top: 30%; width: 280px; height: 280px; border-radius: 50%; background: rgba(174,189,163,0.12); }
-  .hero-inner { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; position: relative; z-index: 1; display: grid; grid-template-columns: auto 1fr; gap: 4rem; align-items: center; }
+  .hero-inner { width: 100%; max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; position: relative; z-index: 1; display: grid; grid-template-columns: auto 1fr; gap: 4rem; align-items: center; }
   .hero-emblem { order: -1; transform: translateY(-3rem); }
   .hero-emblem img { width: 200px; height: auto; display: block; }
   .hero-eyebrow { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; }
@@ -87,8 +87,6 @@
   .btn-primary:hover { background: #967fa8; }
   .btn-outline { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; background: transparent; color: var(--text); padding: 13px 28px; border-radius: 2px; border: 1px solid var(--border); transition: all 0.2s; cursor: pointer; }
   .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
-  .hero-tags { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 3rem; }
-  .tag { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); background: rgba(255,255,255,0.6); border: 1px solid var(--border); padding: 5px 12px; border-radius: 20px; }
 
   /* SECTIONS */
   section { padding: 5rem 2rem; }
@@ -243,19 +241,10 @@
     <div class="hero-text">
     <p class="hero-eyebrow">Anima Absoluta · Anett Szabó · Leipzig</p>
     <h1>Ein Weg zurück in<br>deine <em>innere Ganzheit</em></h1>
-    <p class="hero-sub">Ganzheitliche Körperarbeit, bewusste Prozessbegleitung und mediale Wahrnehmung – auf körperlicher, geistiger und seelischer Ebene.</p>
+    <p class="hero-sub">Raum für Bewusstsein, Selbstheilung und innere Rückverbindung.</p>
     <div class="btn-group">
       <a href="#buchung" class="btn-primary">Termin vereinbaren</a>
       <a href="#angebote" class="btn-outline">Angebote entdecken</a>
-    </div>
-    <div class="hero-tags">
-      <span class="tag">Yoga</span>
-      <span class="tag">Pilates</span>
-      <span class="tag">Meditation</span>
-      <span class="tag">Faszientraining</span>
-      <span class="tag">Atemarbeit</span>
-      <span class="tag">Systemische Aufstellung</span>
-      <span class="tag">Mediale Begleitung</span>
     </div>
     </div>
     <div class="hero-emblem"><img src="assets/logo.png" alt="Anima Absoluta – Anett Szabó"></div>
@@ -267,15 +256,16 @@
   <div class="section-inner">
     <div class="about-grid">
       <div class="about-visual">
-        <img class="about-photo" src="assets/anett.jpg" alt="Anett Szabó, Anima Absoluta Leipzig" width="340" height="340" loading="lazy">
+        <img class="about-photo" src="assets/anett-portrait.jpg" alt="Anett Szabó, Anima Absoluta Leipzig" width="340" height="340" loading="lazy">
       </div>
       <div>
         <p class="section-label">Über mich</p>
-        <h2>Anett <em>Szabó</em></h2>
+        <h2>Meine <em>Arbeit</em></h2>
         <div class="ornament">· · ·</div>
-        <p class="about-quote">„In meiner Arbeit verbinde ich ganzheitliche Körperarbeit mit bewusster Prozessbegleitung und medialer Wahrnehmung."</p>
-        <p class="about-text">Ich arbeite auf körperlicher, geistiger und seelischer Ebene und unterstütze dabei, Blockaden achtsam zu erkennen – dort, wo sie sich zeigen: im Körper, im Denken oder im inneren Erleben.</p>
-        <p class="about-text">Diese Prozesse dürfen sich in einem geschützten Raum lösen und neu ordnen. So entsteht Raum für Selbstheilung, innere Ausrichtung und eine tiefe Rückverbindung mit dem eigenen Wesenskern – gerade in Zeiten des Wandels und der Neuorientierung.</p>
+        <p class="about-quote">„In meiner Arbeit verbinde ich ganzheitliche Körperarbeit mit bewusster Prozessbegleitung und medialer Wahrnehmung.“</p>
+        <p class="about-text">Meine Begleitung ist geprägt von Natürlichkeit, Wahrhaftigkeit und einer tiefen Verbindung zum Leben.</p>
+        <p class="about-text">Ich begegne Menschen offen, achtsam und ohne vorgefertigte Wege. Jeder Mensch trägt seine eigene Geschichte, seine Erfahrungen und seine innere Weisheit in sich.</p>
+        <p class="about-text">In meiner Arbeit darf sich zeigen, was gesehen, gefühlt und verstanden werden möchte. Nicht, um etwas zu erzwingen, sondern um Raum für Veränderung, Selbstheilung und die Rückverbindung mit dem eigenen Wesenskern zu öffnen.</p>
         <br>
         <a href="#kontakt" class="btn-outline">Kontakt aufnehmen</a>
       </div>
