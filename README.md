@@ -3,7 +3,7 @@
 Statische Website (HTML/CSS/JS) mit zwei kleinen PHP-Teilen:
 
 - `api/anfrage.php` nimmt Kontakt-, Termin- und Wartelisten-Formulare entgegen und schickt sie per E-Mail an Anett.
-- `admin/` ist die Terminverwaltung. Anett trägt dort ihre Termine selbst ein. Die Termine werden in `data/termine.json` gespeichert und von der Startseite geladen.
+- `admin/` ist die Verwaltung. Anett trägt dort ihre Termine und die Referenzen selbst ein. Sie werden in `data/termine.json` und `data/referenzen.json` gespeichert und von den Seiten geladen.
 
 ## Einrichtung auf dem Server (einmalig)
 
@@ -20,11 +20,12 @@ Statische Website (HTML/CSS/JS) mit zwei kleinen PHP-Teilen:
    - `https://www.animaabsoluta.de/private/config.php`
    - `https://www.animaabsoluta.de/private/config.sample.php`
    - `https://www.animaabsoluta.de/data/termine.sample.json`
+   - `https://www.animaabsoluta.de/data/referenzen.sample.json`
 6. **Testen:** Kontaktformular absenden (kommt die Mail an?), unter `https://www.animaabsoluta.de/admin/` anmelden, einen Termin eintragen und auf der Startseite prüfen.
 
 ## Spätere Updates
 
-Beim erneuten Hochladen **nicht überschreiben bzw. löschen**: `private/config.php` und `data/termine.json`. Diese Dateien liegen nur auf dem Server (sie stehen in `.gitignore`). Sonst gehen Passwort und Termine verloren.
+Beim erneuten Hochladen **nicht überschreiben bzw. löschen**: `private/config.php`, `data/termine.json` und `data/referenzen.json`. Diese Dateien liegen nur auf dem Server (sie stehen in `.gitignore`). Sonst gehen Passwort und Termine verloren.
 
 ## Für Anett: Termine eintragen
 
@@ -33,6 +34,12 @@ Beim erneuten Hochladen **nicht überschreiben bzw. löschen**: `private/config.
 3. Der Termin steht sofort auf der Website. Ein falscher Eintrag lässt sich löschen und neu eintragen.
 
 Vergangene Termine verschwinden automatisch von der Website und lassen sich im Verwaltungsbereich aufräumen.
+
+## Referenzen pflegen
+
+Die Seite `referenzen.html` liest ihre Einträge aus `data/referenzen.json`. Gepflegt werden sie im Verwaltungsbereich unter `https://www.animaabsoluta.de/admin/` im Reiter „Referenzen“: eintragen (Text, Name, optional „Wobei“), bearbeiten und löschen. Die neueste Referenz steht oben. Solange nichts eingetragen ist, zeigt die Seite einen freundlichen Hinweis. Bitte nur mit Einverständnis der Personen veröffentlichen.
+
+`data/referenzen.json` liegt wie `data/termine.json` nur auf dem Server (steht in `.gitignore`) und darf beim Update nicht überschrieben werden.
 
 ## Datenschutz
 

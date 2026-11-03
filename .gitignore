@@ -2,4 +2,5 @@
 private/config.php
 private/*.json
 data/termine.json
+data/referenzen.json
 *.tmp

@@ -39,9 +39,9 @@ function meldung_setzen(string $art, string $text): void
     $_SESSION['meldung'] = ['art' => $art, 'text' => $text];
 }
 
-function umleiten(): never
+function umleiten(string $bereich = ''): never
 {
-    header('Location: ./', true, 303);
+    header('Location: ./' . ($bereich === 'referenzen' ? '?bereich=referenzen' : ''), true, 303);
     exit;
 }
 
@@ -167,6 +167,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             umleiten();
         }
 
+        if ($aktion === 'ref_hinzufuegen' || $aktion === 'ref_aendern') {
+            $text    = bereinigen((string)($_POST['text'] ?? ''), 1500);
+            $name    = einzeilig((string)($_POST['name'] ?? ''), 60);
+            $kontext = einzeilig((string)($_POST['kontext'] ?? ''), 90);
+            $id      = (string)($_POST['id'] ?? '');
+
+            if ($text === '') {
+                meldung_setzen('fehler', 'Bitte trage den Text der Referenz ein.');
+            } elseif ($name === '') {
+                meldung_setzen('fehler', 'Bitte trage einen Namen ein (ein Vorname oder Kürzel genügt).');
+            } else {
+                $liste = referenzen_laden();
+                if ($aktion === 'ref_hinzufuegen') {
+                    $liste[] = [
+                        'id'      => bin2hex(random_bytes(6)),
+                        'added'   => date('Y-m-d H:i:s'),
+                        'text'    => $text,
+                        'name'    => $name,
+                        'context' => $kontext,
+                    ];
+                    $ok = referenzen_speichern($liste);
+                    $okText = 'Die Referenz von ' . $name . ' ist eingetragen und steht jetzt auf der Website.';
+                } else {
+                    $gefunden = false;
+                    foreach ($liste as &$r) {
+                        if ((string)$r['id'] === $id) {
+                            $r['text'] = $text;
+                            $r['name'] = $name;
+                            $r['context'] = $kontext;
+                            $gefunden = true;
+                        }
+                    }
+                    unset($r);
+                    $ok = $gefunden && referenzen_speichern($liste);
+                    $okText = 'Die Referenz wurde geändert.';
+                }
+                meldung_setzen($ok ? 'ok' : 'fehler', $ok ? $okText : 'Das Speichern hat leider nicht geklappt. Bitte melde dich bei deiner Webdesignerin.');
+            }
+            umleiten('referenzen');
+        }
+
+        if ($aktion === 'ref_loeschen') {
+            $id = (string)($_POST['id'] ?? '');
+            $liste = referenzen_laden();
+            $neu = array_values(array_filter($liste, static fn(array $r): bool => (string)$r['id'] !== $id));
+            if (count($neu) === count($liste)) {
+                meldung_setzen('fehler', 'Diese Referenz wurde nicht gefunden (vielleicht ist sie schon gelöscht).');
+            } elseif (referenzen_speichern($neu)) {
+                meldung_setzen('ok', 'Die Referenz wurde gelöscht.');
+            } else {
+                meldung_setzen('fehler', 'Das Löschen hat leider nicht geklappt.');
+            }
+            umleiten('referenzen');
+        }
+
         if ($aktion === 'vergangene_loeschen') {
             $heute = date('Y-m-d');
             $liste = termine_laden();
@@ -186,8 +241,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $meldung = $_SESSION['meldung'] ?? null;
 unset($_SESSION['meldung']);
 
+$bereich = (($_GET['bereich'] ?? '') === 'referenzen') ? 'referenzen' : 'termine';
 $heute = date('Y-m-d');
-$alle = $angemeldet ? termine_laden() : [];
+$alle = ($angemeldet && $bereich === 'termine') ? termine_laden() : [];
+$referenzen = ($angemeldet && $bereich === 'referenzen') ? referenzen_laden() : [];
 $kommende = array_values(array_filter($alle, static fn(array $t): bool => (string)$t['date'] >= $heute));
 $vergangene = array_values(array_filter($alle, static fn(array $t): bool => (string)$t['date'] < $heute));
 ?><!DOCTYPE html>
@@ -196,7 +253,7 @@ $vergangene = array_values(array_filter($alle, static fn(array $t): bool => (str
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Termine verwalten</title>
+<title>Website verwalten</title>
 <style>
   :root { --bg:#F5F1E8; --text:#4F4A52; --muted:#7B7480; --primary:#A996B8; --secondary:#AEBDA3; --accent:#BFA06A; --border:#DDD4C8; --card:#FFFFFF; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -232,6 +289,17 @@ $vergangene = array_values(array_filter($alle, static fn(array $t): bool => (str
   details summary { cursor: pointer; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.85rem; color: var(--muted); padding: 0.3rem 0; }
   .zeile-links { display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; }
   a { color: var(--primary); }
+  .bereiche { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
+  .bereiche a { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; padding: 10px 18px; border: 1px solid var(--border); border-radius: 3px; color: var(--muted); background: var(--card); }
+  .bereiche a.aktiv { background: var(--primary); border-color: var(--primary); color: #fff; }
+  textarea { width: 100%; padding: 12px 14px; font-size: 1rem; font-family: inherit; line-height: 1.6; color: var(--text); background: #fff; border: 1px solid var(--border); border-radius: 3px; min-height: 140px; resize: vertical; }
+  textarea:focus { outline: 2px solid var(--primary); outline-offset: 1px; }
+  .ref { padding: 1.1rem 0; border-bottom: 1px solid var(--border); }
+  .ref:last-child { border-bottom: none; }
+  .ref .ref-text { white-space: pre-line; margin-bottom: 0.5rem; }
+  .ref .ref-von { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.85rem; color: var(--muted); }
+  .ref .ref-aktionen { display: flex; gap: 0.8rem; align-items: center; margin-top: 0.8rem; flex-wrap: wrap; }
+  .ref details { margin-top: 0.8rem; }
 </style>
 </head>
 <body>
@@ -244,7 +312,7 @@ $vergangene = array_values(array_filter($alle, static fn(array $t): bool => (str
   </div>
 
 <?php elseif (!$angemeldet): ?>
-  <h1>Termine verwalten</h1>
+  <h1>Website verwalten</h1>
   <?php if ($meldung): ?><div class="meldung <?= h($meldung['art']) ?>" style="margin-top:1.2rem"><?= h($meldung['text']) ?></div><?php endif; ?>
   <form method="post" class="card" style="margin-top:1.5rem" autocomplete="off">
     <input type="hidden" name="aktion" value="login">
@@ -256,9 +324,9 @@ $vergangene = array_values(array_filter($alle, static fn(array $t): bool => (str
 
 <?php else: ?>
   <header>
-    <h1>Termine verwalten</h1>
+    <h1>Website verwalten</h1>
     <div class="zeile-links">
-      <a href="/#termine" target="_blank" rel="noopener">Website ansehen</a>
+      <a href="<?= $bereich === 'referenzen' ? '/referenzen.html' : '/#termine' ?>" target="_blank" rel="noopener">Website ansehen</a>
       <form method="post">
         <input type="hidden" name="aktion" value="logout">
         <input type="hidden" name="csrf" value="<?= h($csrf) ?>">
@@ -267,8 +335,80 @@ $vergangene = array_values(array_filter($alle, static fn(array $t): bool => (str
     </div>
   </header>
 
+  <nav class="bereiche">
+    <a href="./" class="<?= $bereich === 'termine' ? 'aktiv' : '' ?>">Termine</a>
+    <a href="./?bereich=referenzen" class="<?= $bereich === 'referenzen' ? 'aktiv' : '' ?>">Referenzen</a>
+  </nav>
+
   <?php if ($meldung): ?><div class="meldung <?= h($meldung['art']) ?>"><?= h($meldung['text']) ?></div><?php endif; ?>
 
+<?php if ($bereich === 'referenzen'): ?>
+  <form method="post" class="card">
+    <h2>Neue Referenz eintragen</h2>
+    <input type="hidden" name="aktion" value="ref_hinzufuegen">
+    <input type="hidden" name="csrf" value="<?= h($csrf) ?>">
+
+    <label for="r_text">Text der Referenz</label>
+    <textarea id="r_text" name="text" maxlength="1500" required placeholder="Was die Person über die Arbeit mit Anett sagt, möglichst im Originalwortlaut"></textarea>
+
+    <div class="row">
+      <div>
+        <label for="r_name">Name</label>
+        <input type="text" id="r_name" name="name" maxlength="60" required placeholder="z. B. Sabine K.">
+      </div>
+      <div>
+        <label for="r_kontext">Wobei (optional)</label>
+        <input type="text" id="r_kontext" name="kontext" maxlength="90" placeholder="z. B. Teilnehmerin Yoga-Kurs">
+      </div>
+    </div>
+
+    <button type="submit" class="full">Referenz eintragen</button>
+    <p class="hinweis">Bitte nur mit Einverständnis der Person veröffentlichen. Ein Vorname oder ein Kürzel genügt. Die Referenz erscheint sofort auf der Website, die neueste steht oben.</p>
+  </form>
+
+  <div class="card">
+    <h2>Referenzen auf der Website (<?= count($referenzen) ?>)</h2>
+    <?php if (!$referenzen): ?>
+      <p class="leer">Noch keine Referenzen eingetragen. Auf der Website steht dann ein freundlicher Hinweis.</p>
+    <?php endif; ?>
+    <?php foreach ($referenzen as $r): ?>
+      <div class="ref">
+        <div class="ref-text"><?= h((string)$r['text']) ?></div>
+        <div class="ref-von"><?= h((string)($r['name'] ?? '')) ?><?= !empty($r['context']) ? ' · ' . h((string)$r['context']) : '' ?></div>
+        <div class="ref-aktionen">
+          <form method="post" onsubmit="return confirm('Diese Referenz wirklich löschen?');">
+            <input type="hidden" name="aktion" value="ref_loeschen">
+            <input type="hidden" name="csrf" value="<?= h($csrf) ?>">
+            <input type="hidden" name="id" value="<?= h((string)$r['id']) ?>">
+            <button type="submit" class="loeschen">Löschen</button>
+          </form>
+        </div>
+        <details>
+          <summary>Bearbeiten</summary>
+          <form method="post" style="margin-top:0.8rem">
+            <input type="hidden" name="aktion" value="ref_aendern">
+            <input type="hidden" name="csrf" value="<?= h($csrf) ?>">
+            <input type="hidden" name="id" value="<?= h((string)$r['id']) ?>">
+            <label>Text der Referenz</label>
+            <textarea name="text" maxlength="1500" required><?= h((string)$r['text']) ?></textarea>
+            <div class="row">
+              <div>
+                <label>Name</label>
+                <input type="text" name="name" maxlength="60" required value="<?= h((string)($r['name'] ?? '')) ?>">
+              </div>
+              <div>
+                <label>Wobei (optional)</label>
+                <input type="text" name="kontext" maxlength="90" value="<?= h((string)($r['context'] ?? '')) ?>">
+              </div>
+            </div>
+            <button type="submit" class="full">Änderung speichern</button>
+          </form>
+        </details>
+      </div>
+    <?php endforeach; ?>
+  </div>
+
+<?php else: ?>
   <form method="post" class="card">
     <h2>Neuen Termin eintragen</h2>
     <input type="hidden" name="aktion" value="hinzufuegen">
@@ -343,7 +483,8 @@ $vergangene = array_values(array_filter($alle, static fn(array $t): bool => (str
     </details>
   </div>
   <?php endif; ?>
-<?php endif; ?>
+<?php endif; /* Bereich */ ?>
+<?php endif; /* angemeldet */ ?>
 
 </div>
 </body>

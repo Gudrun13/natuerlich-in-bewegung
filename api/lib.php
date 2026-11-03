@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 const TERMINE_DATEI = __DIR__ . '/../data/termine.json';
+const REFERENZEN_DATEI = __DIR__ . '/../data/referenzen.json';
 const RATE_DATEI    = __DIR__ . '/../private/rate.json';
 const LOGIN_DATEI   = __DIR__ . '/../private/login.json';
 
@@ -92,6 +93,25 @@ function termine_speichern(array $liste): bool
     $liste = array_values($liste);
     usort($liste, static fn(array $a, array $b): int => strcmp((string)$a['date'], (string)$b['date']));
     return json_schreiben(TERMINE_DATEI, $liste);
+}
+
+/** Referenzen: neueste zuerst. */
+function referenzen_laden(): array
+{
+    $liste = json_lesen(REFERENZEN_DATEI, []);
+    $ok = [];
+    foreach ($liste as $r) {
+        if (is_array($r) && isset($r['id'], $r['text'])) {
+            $ok[] = $r;
+        }
+    }
+    usort($ok, static fn(array $a, array $b): int => strcmp((string)($b['added'] ?? ''), (string)($a['added'] ?? '')));
+    return $ok;
+}
+
+function referenzen_speichern(array $liste): bool
+{
+    return json_schreiben(REFERENZEN_DATEI, array_values($liste));
 }
 
 /**
