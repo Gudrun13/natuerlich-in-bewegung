@@ -434,7 +434,7 @@ $vergangene = array_values(array_filter($alle, static fn(array $t): bool => (str
     </div>
 
     <label for="ort">Ort</label>
-    <input type="text" id="ort" name="ort" maxlength="80" placeholder="z. B. Leipzig, Praxisraum">
+    <input type="text" id="ort" name="ort" maxlength="80" placeholder="z. B. Praxisraum oder online">
 
     <button type="submit" class="full">Termin eintragen</button>
     <p class="hinweis">Der Termin erscheint sofort auf der Website. Falls ein Eintrag falsch ist: löschen und neu eintragen.</p>
